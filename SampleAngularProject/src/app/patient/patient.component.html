@@ -1,0 +1,244 @@
+
+<div class="container">  
+  
+  <mat-card>  
+    <mat-toolbar color="accent">  
+      <div align="center" style="color:white;text-align: right;">  
+       Patient Enrollment
+      </div>    
+    </mat-toolbar>  
+  <br><br>  
+    <mat-card-content>  
+      <form [formGroup]="patientForm"(ngSubmit)="onFormSubmit()">  
+              <table>  
+                <tr>  
+                  <td class="tbl1">  
+                    <mat-form-field class="demo-full-width">  
+                      <input formControlName="patPatientName" matTooltip="Enter Patient Name" matInput placeholder="Patient Name">  
+                    </mat-form-field>  
+                    <mat-error>  
+                      <span *ngIf="!patientForm.get('patPatientName').value && patientForm.get('patPatientName').touched"></span>  
+                    </mat-error>  
+                  </td>  
+                  <td class="tbl1">  
+                    <mat-form-field class="demo-full-width">  
+                      <input matInput [matDatepicker]="picker"matTooltip="Enter Date Of Birth" formControlName="patDateOfBirth"placeholder="Choose Date Of Birth">  
+                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>  
+                      <mat-datepicker #picker></mat-datepicker>  
+                    </mat-form-field>  
+                    <mat-error>  
+                      <span *ngIf="!patientForm.get('patDateOfBirth').value && patientForm.get('patDateOfBirth').touched"></span>  
+                    </mat-error>  
+                  </td>  
+                  <td class="tbl1">  
+                    <mat-form-field class="demo-full-width">  
+                      <input formControlName="patEmailId" matTooltip="Enter EmailId" matInput placeholder="EmailId">  
+                    </mat-form-field>  
+                    <mat-error>  
+                      <span *ngIf="!patientForm.get('patEmailId').value && patientForm.get('patEmailId').touched"></span>  
+                    </mat-error>  
+                  </td>  
+                </tr>  
+                <tr>  
+                  <td class="tbl1">  
+                    <span style='float:left;'>Gender</span>  
+                    <br>  
+                    <!-- <mat-radio-group matTooltip="Enter Gender"formControlName="patGender" class="demo-full-width" style="float:left;" >  
+                        <mat-radio-button  value="0" [checked]="patGender === 0">Male</mat-radio-button>    
+                        <mat-radio-button style="margin-left:100px" value="1"  [checked]="patGender === 1">Female</mat-radio-button>  
+                      </mat-radio-group>  -->
+                      <!-- <mat-radio-group matTooltip="Enter Gender" formControlName="patGender" class="demo-full-width" style="float:left;" (change)="saveAnimal($event)">  
+                          <mat-radio-button style="margin-left:70px" *ngFor="let option of genderOptions"
+                          [checked]="option.checked" value="{{option.value}}">{{option.label}} 
+                </mat-radio-button>
+                        </mat-radio-group>   -->
+                        <mat-radio-group name="animals" matTooltip="Enter Gender" (change)="saveAnimal($event)" class="demo-full-width"  style="float:left;" >
+                          <mat-radio-button  style="margin-left:100px"  *ngFor="let option of animalOptions"
+                                   [checked]="option.checked" value="{{option.value}}">{{option.label}}
+                         </mat-radio-button>
+                       </mat-radio-group>
+                    <mat-error>  
+                      <span *ngIf="!patientForm.get('patGender').value && patientForm.get('patGender').touched"></span>  
+                    </mat-error>  
+                  </td>  
+                  <td class="tbl1">  
+                    <mat-form-field class="demo-full-width">  
+                      <input matTooltip="Enter Address"formControlName="patAddress" matInput placeholder="Address">  
+                    </mat-form-field>  
+                    <mat-error>  
+                      <span *ngIf="!patientForm.get('patAddress').value && patientForm.get('patAddress').touched"></span>  
+                    </mat-error>  
+                  </td>  
+                  <td class="tbl1">  
+                    <mat-form-field class="demo-full-width">  
+                      <input formControlName="patPinCode" matTooltip="Enter Pine Code" matInput placeholder="PinCode">  
+                    </mat-form-field>  
+                    <mat-error>  
+                      <span *ngIf="!patientForm.get('patPinCode').value && patientForm.get('patPinCode').touched"></span>  
+                    </mat-error>  
+                  </td>  
+                </tr>  
+                <tr>  
+                  <td></td>  
+                  <td  class="content-center">  
+                    
+                  </td>  
+                  <td>  
+                    <p *ngIf="dataSaved" style="color:rgb(0, 128, 0);font-size:20px;font-weight:bold" Class="success" align="left">  
+                      {{message}}  
+                    </p>  
+                  </td>  
+                </tr>  
+              </table>  
+  <br><br>  
+<div class="example-header"style="float:right;"> 
+    <button type="submit" style="margin:10px;" mat-raised-button color="accent"matTooltip="Click Submit Button"[disabled]="!patientForm.valid">Submit</button>      
+    <button type="reset" style="margin:10px;" mat-raised-button color="accent"matTooltip="Click Reset Button" (click)="resetForm()">Reset</button> 
+  </div>
+<br>
+  <div class="example-header" >
+    
+      
+      
+  </div>
+  
+  <div class="example-container mat-elevation-z8">
+    
+   <div>
+    <div style="width: 60%; float:left;">
+        <mat-form-field style="margin-left: 30px;margin-top: 30px;width: 90%;">
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter" >
+          </mat-form-field>
+    </div>
+  
+  <div>
+      <div style="width: 5%; float:left;margin-top: 37px;">
+          <button type="button" matTooltip="Click Edit Button" mat-icon-button ><mat-icon>settings</mat-icon></button>
+      </div>
+      <div style="width: 5%; float:right;margin-top: 37px;">
+          <button type="button" matTooltip="Click Delete Button"  mat-icon-button (click)="deletePatient(endorsementIds)"><mat-icon>delete</mat-icon></button>
+       </div>
+    <div style="width: 30%; float:right;margin-top: 30px;">      
+      <mat-paginator  [length]="10" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]" ></mat-paginator>
+      </div>
+  
+    </div> 
+    </div>
+      
+  
+      <mat-table [dataSource]="dataSource" matSort (matSortChange)="ngAfterViewInit()">
+
+        <!-- <ng-container matColumnDef="checked">
+          <mat-header-cell *matHeaderCellDef>Check</mat-header-cell>
+          <mat-cell *matCellDef="let element"> 
+            <mat-checkbox [(ngModel)]="element.checked"></mat-checkbox>
+          </mat-cell>
+        </ng-container> -->
+         <!-- Checkbox Column -->
+  <ng-container matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-checkbox (change)="masterToggle($event)"
+                      [checked]="selection.hasValue() && isAllSelected()"
+                      [indeterminate]="selection.hasValue() && !isAllSelected()">
+        </mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let row">
+        <mat-checkbox (click)="$event.stopPropagation()"
+                      (change)="toggle($event, row)"
+                      [checked]="selection.isSelected(row)">
+        </mat-checkbox>
+      </td>
+    </ng-container>
+        <!-- ID Column -->
+        <!-- <ng-container matColumnDef="patPatientId">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Id </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.patPatientId}} </mat-cell>
+          </ng-container> -->
+  
+        <ng-container matColumnDef="patPatientName">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Patient Name </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.patPatientName}} </mat-cell>
+        </ng-container>
+    
+        <!-- Progress Column -->
+        <ng-container matColumnDef="patDateOfBirth">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Patient DateOfBirth </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.patDateOfBirth}} </mat-cell>
+        </ng-container>
+    
+        <!-- Name Column -->
+        <ng-container matColumnDef="patEmailId">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> EmailId </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.patEmailId}} </mat-cell>
+        </ng-container>
+        
+        <ng-container matColumnDef="patGender">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Gender </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.patGender == 0 ? 'Male' : 'Female'}} </mat-cell>
+          </ng-container>
+  
+          <ng-container matColumnDef="patAddress">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Address </mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.patAddress}} </mat-cell>
+            </ng-container>
+        <!-- Color Column -->
+        <ng-container matColumnDef="patPinCode">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> PinCode </mat-header-cell>
+          <mat-cell *matCellDef="let row" > {{row.patPinCode}} </mat-cell>
+        </ng-container>
+  
+        <ng-container matColumnDef="update">
+            <mat-header-cell *matHeaderCellDef mat-sort-header > Edit </mat-header-cell>
+            <mat-cell *matCellDef="let row" >  
+               <button type="button" matTooltip="Click Edit Button"  mat-icon-button (click)="loadPatientToEdit(row.patPatientId)"><mat-icon>edit</mat-icon></button>
+            </mat-cell>    
+                 
+          </ng-container>
+  
+          <!-- <ng-container matColumnDef="delete">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Delete </mat-header-cell>
+              <mat-cell *matCellDef="let row" >
+                  <button type="button" matTooltip="Click Delete Button"  mat-icon-button (click)="deletePatient(row.patPatientId)"><mat-icon>delete</mat-icon></button>
+              </mat-cell>           
+            </ng-container>
+   -->
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;">
+        </mat-row>
+      </mat-table>
+    
+     
+    </div>
+        <!-- <table mat-table>  
+            <tr ngclass="btn-primary">  
+              <th class="tbl2">Patient Name</th>  
+              <th class="tbl2">Date Of Birth</th>  
+              <th class="tbl2">Email Id</th>  
+              <th class="tbl2">Gender</th>  
+              <th class="tbl2">Address</th>  
+              <th class="tbl2">Pine Code</th>  
+              <th class="tbl2">Edit</th>  
+              <th class="tbl2">Delete</th>  
+            </tr>  
+            <tr *ngFor="let patient of allPatients | async">  
+              <td class="tbl2">{{patient.patPatientName}}</td>  
+              <td class="tbl2">{{patient.patDateOfBirth | date }}</td>  
+              <td class="tbl2">{{patient.patEmailId}}</td>  
+              <td class="tbl2">{{patient.patGender == 0 ? 'Male' : 'Female'}}</td>  
+              <td class="tbl2">{{patient.patAddress}}</td>  
+              <td class="tbl2">{{patient.patPinCode}}</td>  
+              <td class="tbl2">  
+                <button type="button" class="btn btn-info"matTooltip="Click Edit Button"(click)="loadPatientToEdit(patient.patPatientId)">Edit</button>  
+              </td>  
+              <td class="tbl2">  
+                <button type="button" class="btn btn-danger"matTooltip="Click Delete Button"(click)="deletePatient(patient.patPatientId)">Delete</button>  
+              </td>  
+            </tr>  
+    
+          </table>   -->
+      </form>  
+      <!-- <mat-spinner></mat-spinner> -->
+    </mat-card-content>  
+  </mat-card>  
+  </div>  
+  <ng4-loading-spinner> </ng4-loading-spinner>
